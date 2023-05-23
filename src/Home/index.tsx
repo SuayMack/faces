@@ -3,8 +3,15 @@ import { View } from 'react-native';
 // cameraType - acessa a camera da frente
 import { Camera, CameraType, FaceDetectionResult } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector'
-//para salvar as posições da face na camera
-import { useSharedValue } from 'react-native-reanimated'
+//useSharedValue - para salvar as posições da face na camera
+// criar uma estilização animada que vai fazer uso do valor compartilhado
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
+
+//para não dar erro criar uma pasta @types com um arquivo png.d.ts para 'tipar as imagens'
+//para que as imagens sejam reconhecidas
+import neutralImg from '../assets/neutral.png'
+import grinningImg from '../assets/grinning.png'
+import winkingImg from '../assets/winking.png'
 
 import { styles } from './style';
 
@@ -48,6 +55,21 @@ export function Home() {
     }
   }
 
+  const animatedStyle = useAnimatedStyle(() => ({
+    position: 'absolute',
+    zIndex: 1,
+    // pega a posição a profundidade da face
+    width: faceValues.value.with,
+    height: faceValues.value.height,
+    transform: [
+      {translateX: faceValues.value.x},
+      {translateY: faceValues.value.y},
+    ],
+    //aparecer a borda para marcar a face(teste)
+    // borderColor: 'blue',
+    // borderWidth: 10
+  }))
+
   // useEffect - assim que a interface for renderizada
   useEffect(() => {
     // solicitar a permissão
@@ -60,6 +82,10 @@ export function Home() {
 
   return (
     <View style={styles.container}>
+      {
+        faceDetected &&
+        <Animated.View style={animatedStyle} />
+      }
       <Camera 
       style={styles.camera}
       type={CameraType.front}
