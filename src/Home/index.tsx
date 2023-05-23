@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { ImageSourcePropType, View } from 'react-native';
 // cameraType - acessa a camera da frente
 import { Camera, CameraType, FaceDetectionResult } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector'
@@ -10,7 +10,7 @@ import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanima
 //para não dar erro criar uma pasta @types com um arquivo png.d.ts para 'tipar as imagens'
 //para que as imagens sejam reconhecidas
 import neutralImg from '../assets/neutral.png'
-import grinningImg from '../assets/grinning.png'
+import smilingImg from '../assets/grinning.png'
 import winkingImg from '../assets/winking.png'
 
 import { styles } from './style';
@@ -24,10 +24,12 @@ export function Home() {
   //  permission = permissão do usuário (S/N),  
   // requestPermition = função para solicitar a permissão
   const [permission, requestPermission] = Camera.useCameraPermissions()
+  //essa vai ser a imagem padrão explicita
+  const [emoji, setEmoji] = useState<ImageSourcePropType>(neutralImg)
 
   //posições da face começando em 0
   const faceValues = useSharedValue({
-    with: 0,
+    width: 0,
     height: 0,
     x: 0,
     y: 0
@@ -43,13 +45,24 @@ export function Home() {
       const { size, origin } = face.bounds
 
       faceValues.value = {
-        with: size.width,
+        width: size.width,
         height: size.height,
         x: origin.x,
         y: origin.y
       }
 
       setFaceDetected(true)
+      if(face.smilingProbability > 0.5){
+        setEmoji(smilingImg)
+      }
+      //espelhado
+      else if(face.leftEyeOpenProbability < 0.5 && face.rightEyeOpenProbability > 0.5) {
+        setEmoji(winkingImg)
+      }
+      
+      else {
+        setEmoji(neutralImg)
+      }
     }else {
       setFaceDetected(false)
     }
@@ -59,7 +72,7 @@ export function Home() {
     position: 'absolute',
     zIndex: 1,
     // pega a posição a profundidade da face
-    width: faceValues.value.with,
+    width: faceValues.value.width,
     height: faceValues.value.height,
     transform: [
       {translateX: faceValues.value.x},
@@ -84,7 +97,10 @@ export function Home() {
     <View style={styles.container}>
       {
         faceDetected &&
-        <Animated.View style={animatedStyle} />
+        <Animated.Image
+         style={animatedStyle} 
+         source={emoji}
+        />
       }
       <Camera 
       style={styles.camera}
@@ -96,8 +112,7 @@ export function Home() {
         runClassifications: FaceDetector.FaceDetectorClassifications.all,
         minDetectionInterval: 100,
         tracking: true,
-      }}>        
-      </Camera>
-    </View>
+      }}/> 
+      </View>
   )
 }
