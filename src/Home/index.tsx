@@ -13,7 +13,7 @@ import neutralImg from '../assets/neutral.png'
 import smilingImg from '../assets/grinning.png'
 import winkingImg from '../assets/winking.png'
 
-import { styles } from './style';
+import { styles } from './styles';
 
 export function Home() {
 
@@ -56,7 +56,7 @@ export function Home() {
         setEmoji(smilingImg)
       }
       //espelhado
-      else if(face.leftEyeOpenProbability < 0.5 && face.rightEyeOpenProbability > 0.5) {
+      else if(face.leftEyeOpenProbability > 0.5 && face.rightEyeOpenProbability < 0.5) {
         setEmoji(winkingImg)
       }
       
