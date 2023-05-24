@@ -12,6 +12,8 @@ import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanima
 import neutralImg from '../assets/neutral.png'
 import smilingImg from '../assets/grinning.png'
 import winkingImg from '../assets/winking.png'
+import winkingRightImg from '../assets/winkingRight.png'
+
 
 import { styles } from './styles';
 
@@ -58,6 +60,8 @@ export function Home() {
       //espelhado
       else if(face.leftEyeOpenProbability > 0.5 && face.rightEyeOpenProbability < 0.5) {
         setEmoji(winkingImg)
+      }else if(face.leftEyeOpenProbability < 0.5 && face.rightEyeOpenProbability > 0.5) {
+        setEmoji(winkingRightImg)
       }
       
       else {
