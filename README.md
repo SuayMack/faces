@@ -2,10 +2,6 @@
     <img src="./assets/emoji.gif">
 </h1>
 
-<h3 align="center">
-    <a href="#">Acessar a demonstração</a>
-<h3 >
-
 # Indice
 
 - [Sobre](#-sobre)
