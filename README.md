@@ -24,8 +24,6 @@ O projeto **Faces** é uma aplicação que detecte expressões e faces usando **
 
 O projeto foi desenvolvido utilizando as seguintes tecnologias
 
-- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML) ou (https://www.w3schools.com/html/)
-- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) ou (https://www.w3schools.com/css/)
 - [React Native](https://reactnative.dev/)
 - [EXPO](https://reactnative.dev/)
 - [Expo FaceDetector](https://docs.expo.dev/versions/latest/sdk/facedetector/)
