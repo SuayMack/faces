@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="./assets/emoji.gif">
+    <img src="./assets/emoji.gif" height= '200px'>
 </h1>
 
 # Indice
