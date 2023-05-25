@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="./img/gif.gif">
+    <img src="../assets/emoji.gif">
 </h1>
 
 <h3 align="center">
